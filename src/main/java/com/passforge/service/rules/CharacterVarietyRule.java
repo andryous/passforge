@@ -13,13 +13,25 @@ public class CharacterVarietyRule implements StrengthRule {
         boolean hasDigit = password.matches(".*[0-9].*");
         boolean hasSymbol = password.matches(".*[!@#$%^&*()].*");
 
+        if (!hasLower) {
+            response.getSuggestions().add("Add lowercase letters to your password.");
+        }
+        if (!hasUpper) {
+            response.getSuggestions().add("Add uppercase letters to your password.");
+        }
+        if (!hasDigit) {
+            response.getSuggestions().add("Add numbers to your password.");
+        }
+        if (!hasSymbol) {
+            response.getSuggestions().add("Add symbols (e.g., !@#$%) to your password.");
+        }
+
         int varietyCount = 0;
         if (hasLower) varietyCount++;
         if (hasUpper) varietyCount++;
         if (hasDigit) varietyCount++;
         if (hasSymbol) varietyCount++;
 
-        // Add points based on how many different character types are used.
         if (varietyCount >= 3) {
             response.setScore(response.getScore() + 30);
         } else if (varietyCount >= 2) {

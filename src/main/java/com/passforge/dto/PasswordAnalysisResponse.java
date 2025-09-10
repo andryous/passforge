@@ -1,18 +1,25 @@
 package com.passforge.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import java.util.ArrayList;
+import java.util.List;
 
+// We remove @AllArgsConstructor because we will manage object creation more manually now.
 @Data
-// @AllArgsConstructor: A Lombok annotation that generates a constructor
-// with an argument for every field in the class.
-// This makes it easy to create new instances of this object.
-@AllArgsConstructor
 public class PasswordAnalysisResponse {
 
-    // A numeric score representing the password's strength.
     private int score;
-
-    // A descriptive text for the strength level (e.g., "WEAK", "STRONG").
     private String strengthLevel;
+    private boolean pwned;
+
+    // A list to hold actionable suggestions for the user.
+    // We initialize it to an empty list to avoid null pointer exceptions.
+    private List<String> suggestions = new ArrayList<>();
+
+    // We create a constructor for the initial state.
+    public PasswordAnalysisResponse(int score, String strengthLevel, boolean pwned) {
+        this.score = score;
+        this.strengthLevel = strengthLevel;
+        this.pwned = pwned;
+    }
 }

@@ -3,8 +3,6 @@ package com.passforge.service.rules;
 import com.passforge.dto.PasswordAnalysisResponse;
 import org.springframework.stereotype.Component;
 
-// @Component marks this class as a generic Spring component,
-// allowing it to be managed by the Spring container and injected where needed.
 @Component
 public class LengthRule implements StrengthRule {
 
@@ -13,14 +11,13 @@ public class LengthRule implements StrengthRule {
         int length = password.length();
 
         if (length < 8) {
-            response.setScore(response.getScore() + 10); // Adds 10 points
-            response.setStrengthLevel("VERY_WEAK");
+            response.setScore(response.getScore() + 10);
+            response.getSuggestions().add("Password should be at least 8 characters long.");
         } else if (length < 12) {
-            response.setScore(response.getScore() + 25); // Adds 25 points
-            response.setStrengthLevel("MEDIUM");
+            response.setScore(response.getScore() + 25);
+            response.getSuggestions().add("Consider making your password longer than 12 characters.");
         } else {
-            response.setScore(response.getScore() + 40); // Adds 40 points
-            response.setStrengthLevel("STRONG");
+            response.setScore(response.getScore() + 40);
         }
     }
 }
