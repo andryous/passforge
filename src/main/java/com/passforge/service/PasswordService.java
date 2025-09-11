@@ -50,7 +50,7 @@ public class PasswordService {
      * @param score The final calculated score.
      * @return A string representing the strength level.
      */
-    private String determineStrengthLevel(int score) {
+    public String determineStrengthLevel(int score) {
         if (score < 40) {
             return "WEAK";
         } else if (score < 60) {

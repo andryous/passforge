@@ -1,19 +1,80 @@
 # PassForge API 🚀
 
-A simple and powerful API built with Java and Spring Boot to analyze password strength and check for data breaches using the HIBP service.
+A powerful and educational REST API built with Java and Spring Boot to analyze password strength and check for data breaches.
 
-## About this Project
+## About This Project
 
-This is a personal learning project designed to practice and deepen backend development concepts, focusing on clean architecture, API design, and security best practices.
+This project is a personal learning initiative to build a robust backend application from the ground up. The primary goals were to practice professional development workflows, understand layered architecture, and implement a scalable, rule-based logic engine.
 
-## Features (In-Progress)
+---
 
-- [ ] Password strength analysis based on a configurable rules engine.
-- [ ] Data breach checking for passwords and usernames via the "Have I Been Pwned" API.
-- [ ] RESTful endpoints for easy integration.
+## Core Features
+
+* **Rule-Based Strength Analysis:** Password strength is calculated via a dynamic and scalable engine. New rules (e.g., for length, character variety, common passwords) can be easily added.
+* **Data Breach Checking:** Integrates with the "Have I Been Pwned" (HIBP) API using the secure k-Anonymity model to check if a password has been exposed in a known data breach.
+* **Actionable Suggestions:** Provides a list of concrete suggestions to help users improve their password security.
+* **Unit Tested:** Core business logic is verified with JUnit 5 tests to ensure reliability.
+
+---
+
+## API Endpoints
+
+### Analyze Password
+
+Analyzes a given password for strength and breach status.
+
+* **URL:** `/api/passwords/analyze`
+* **Method:** `POST`
+* **Request Body:**
+
+    ```json
+    {
+        "password": "your_password_here"
+    }
+    ```
+
+* **Success Response (200 OK):**
+
+    ```json
+    {
+        "score": 70,
+        "strengthLevel": "STRONG",
+        "pwned": false,
+        "suggestions": [
+            "Consider making your password longer than 12 characters."
+        ]
+    }
+    ```
+
+---
+
+## How to Run Locally
+
+1.  **Prerequisites:**
+    * Java 17 (or higher)
+    * Apache Maven
+    * Git
+
+2.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/andryous/passforge.git](https://github.com/andryous/passforge.git)
+    cd passforge
+    ```
+
+3.  **Run the application:**
+    ```bash
+    ./mvnw spring-boot:run
+    ```
+    The API will be available at `http://localhost:8080`.
 
 ## Technologies Used
 
-* **Backend:** Java, Spring Boot
+* **Framework:** Spring Boot 3.5.5
+* **Language:** Java 21
 * **Build Tool:** Maven
-* **Testing:** Postman
+* **Dependencies:**
+    * Spring Web
+    * Spring WebFlux (for `WebClient`)
+    * Lombok
+    * Jakarta Annotations API
+* **Testing:** JUnit 5, Postman
