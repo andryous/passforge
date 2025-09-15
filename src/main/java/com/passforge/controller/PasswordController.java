@@ -4,9 +4,11 @@ import com.passforge.dto.PasswordAnalysisRequest;
 import com.passforge.dto.PasswordAnalysisResponse;
 import com.passforge.service.PasswordService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin; // 1. ADD THIS IMPORT
 
 @RestController
 @RequestMapping("/api/passwords")
+@CrossOrigin(origins = "http://localhost:5173") // 2. ADD THIS ANNOTATION
 public class PasswordController {
 
     // Field for the PasswordService instance.
