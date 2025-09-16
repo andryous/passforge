@@ -1,3 +1,4 @@
+// src/main/java/com/passforge/service/rules/CharacterVarietyRule.java
 package com.passforge.service.rules;
 
 import com.passforge.dto.PasswordAnalysisResponse;
@@ -11,8 +12,10 @@ public class CharacterVarietyRule implements StrengthRule {
         boolean hasLower = password.matches(".*[a-z].*");
         boolean hasUpper = password.matches(".*[A-Z].*");
         boolean hasDigit = password.matches(".*[0-9].*");
-        boolean hasSymbol = password.matches(".*[!@#$%^&*()].*");
+        // The regular expression includes a wider range of common symbols.
+        boolean hasSymbol = password.matches(".*[!@#$%^&*()_+\\-=\\[\\]{}|;:,.<>/?].*");
 
+        // Suggestions logic remains the same
         if (!hasLower) {
             response.getSuggestions().add("Add lowercase letters to your password.");
         }
@@ -32,9 +35,13 @@ public class CharacterVarietyRule implements StrengthRule {
         if (hasDigit) varietyCount++;
         if (hasSymbol) varietyCount++;
 
-        if (varietyCount >= 3) {
+        // --- SCORING LOGIC CHANGE ---
+        // A higher score is now awarded for using all four character types.
+        if (varietyCount == 4) {
+            response.setScore(response.getScore() + 45); // Increased from 30
+        } else if (varietyCount == 3) {
             response.setScore(response.getScore() + 30);
-        } else if (varietyCount >= 2) {
+        } else if (varietyCount == 2) {
             response.setScore(response.getScore() + 15);
         }
     }

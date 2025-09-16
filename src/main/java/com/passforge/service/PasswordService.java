@@ -26,21 +26,38 @@ public class PasswordService {
      * @return A PasswordAnalysisResponse object with the full analysis.
      */
     public PasswordAnalysisResponse analyzePassword(String password) {
-        // Start with a default response object.
         PasswordAnalysisResponse response = new PasswordAnalysisResponse(0, "UNKNOWN", false);
 
-        // Loop through each strength rule.
+        // This flag will help to know if a critical rule (like CommonPassword) has already set the final state.
+        boolean isOverridden = false;
         for (StrengthRule rule : rules) {
             rule.apply(response, password);
+            // The CommonPasswordRule sets the level to VERY_WEAK directly. It detects that.
+            if ("VERY_WEAK".equals(response.getStrengthLevel())) {
+                isOverridden = true;
+            }
         }
 
-        // Determine the final strength level based on the total score.
-        String finalStrengthLevel = determineStrengthLevel(response.getScore());
-        response.setStrengthLevel(finalStrengthLevel);
+        // Only determine strength level from score if it wasn't overridden by a critical rule.
+        if (!isOverridden) {
+            String finalStrengthLevel = determineStrengthLevel(response.getScore());
+            response.setStrengthLevel(finalStrengthLevel);
+        }
 
-        // Call the HIBPClient to check for breaches.
+        // --- NEW OVERRIDE LOGIC FOR PWNED PASSWORDS ---
+        // This check happens AFTER all other rules.
         boolean isPwned = hibpClient.isPasswordPwned(password);
         response.setPwned(isPwned);
+
+        if (isPwned) {
+            // If the password is in a breach, it is fundamentally insecure.
+            // Overrides any previous score or level.
+            response.setStrengthLevel("COMPROMISED"); // A new, more accurate level.
+            response.setScore(10); // A very low score.
+            // Replace any previous suggestions with a single, critical warning.
+            response.getSuggestions().clear();
+            response.getSuggestions().add("This password has been exposed in a data breach and is highly insecure. Do not use it.");
+        }
 
         return response;
     }

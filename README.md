@@ -1,80 +1,67 @@
-# PassForge API 🚀
+# PassForge - Backend API
 
-A powerful and educational REST API built with Java and Spring Boot to analyze password strength and check for data breaches.
+[![Java](https://img.shields.io/badge/Java-21-blue.svg)](https://www.java.com) [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.5-brightgreen.svg)](https://spring.io/projects/spring-boot) [![Maven](https://img.shields.io/badge/Maven-3.9-red.svg)](https://maven.apache.org/)
 
-## About This Project
-
-This project is a personal learning initiative to build a robust backend application from the ground up. The primary goals were to practice professional development workflows, understand layered architecture, and implement a scalable, rule-based logic engine.
+A powerful and secure API for password strength analysis, featuring integration with the Have I Been Pwned database.
 
 ---
+### ► Key Features
 
-## Core Features
-
-* **Rule-Based Strength Analysis:** Password strength is calculated via a dynamic and scalable engine. New rules (e.g., for length, character variety, common passwords) can be easily added.
-* **Data Breach Checking:** Integrates with the "Have I Been Pwned" (HIBP) API using the secure k-Anonymity model to check if a password has been exposed in a known data breach.
-* **Actionable Suggestions:** Provides a list of concrete suggestions to help users improve their password security.
-* **Unit Tested:** Core business logic is verified with JUnit 5 tests to ensure reliability.
-
----
-
-## API Endpoints
-
-### Analyze Password
-
-Analyzes a given password for strength and breach status.
-
-* **URL:** `/api/passwords/analyze`
-* **Method:** `POST`
-* **Request Body:**
-
-    ```json
-    {
-        "password": "your_password_here"
-    }
-    ```
-
-* **Success Response (200 OK):**
-
-    ```json
-    {
-        "score": 70,
-        "strengthLevel": "STRONG",
-        "pwned": false,
-        "suggestions": [
-            "Consider making your password longer than 12 characters."
-        ]
-    }
-    ```
+* **Scalable Rule Engine:** Analyzes password strength based on a configurable set of rules (length, character variety, common passwords).
+* **Secure HIBP Integration:** Checks passwords against the 'Have I Been Pwned' database using the **k-Anonymity** model to protect user privacy.
+* **Comprehensive Analysis:** Returns a detailed response including a numeric score, a strength level, pwned status, and actionable suggestions.
+* **Unit Tested:** Core business logic is validated with JUnit 5 tests.
 
 ---
+### ► Tech Stack
 
-## How to Run Locally
+* **Backend:** Java 21, Spring Boot 3
+* **Build:** Apache Maven
+* **Testing:** JUnit 5
 
-1.  **Prerequisites:**
-    * Java 17 (or higher)
-    * Apache Maven
-    * Git
+---
+### ► Getting Started
 
-2.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/andryous/passforge.git](https://github.com/andryous/passforge.git)
-    cd passforge
-    ```
+#### 1. Prerequisites
+* Java JDK 21
+* Maven 3.9+
 
-3.  **Run the application:**
-    ```bash
-    ./mvnw spring-boot:run
-    ```
-    The API will be available at `http://localhost:8080`.
+#### 2. Clone & Build
+```bash
+git clone https://github.com/andryous/passforge-backend.git
+cd passforge-backend
+./mvnw clean install
+```
 
-## Technologies Used
+#### 3. Run the Application
+This project requires no special environment configuration to run.
+```bash
+./mvnw spring-boot:run
+```
+The application will start on http://localhost:8080.
 
-* **Framework:** Spring Boot 3.5.5
-* **Language:** Java 21
-* **Build Tool:** Maven
-* **Dependencies:**
-    * Spring Web
-    * Spring WebFlux (for `WebClient`)
-    * Lombok
-    * Jakarta Annotations API
-* **Testing:** JUnit 5, Postman
+### ► API Endpoint
+The API exposes a single endpoint for password analysis.  
+URL: POST /api/passwords/analyze  
+
+Request Body:
+```json
+{
+"password": "your_password_to_test"
+}
+```
+Success Response (200 OK):
+
+```properties
+{
+"score": 85,
+"strengthLevel": "VERY_STRONG",
+"pwned": false,
+"suggestions": [
+"Add symbols (e.g., !@#$%) to your password."
+]
+}
+```
+
+### 👤 Author
+* **Claudio Rodriguez**
