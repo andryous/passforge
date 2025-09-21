@@ -1,0 +1,7 @@
+### Analyze a password on the deployed API
+POST https://passforge-backend.fly.dev/api/passwords/analyze
+Content-Type: application/json
+
+{
+  "password": "HelloFlyIO-123!"
+}

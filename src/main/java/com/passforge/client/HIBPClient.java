@@ -21,7 +21,7 @@ public class HIBPClient {
     /**
      * Checks if a password has been exposed in a data breach using the k-Anonymity model.
      * @param password The plain text password to check.
-     * @return A boolean indicating if the password was found in a breach.
+     * @return A boolean indic . mcbating if the password was found in a breach.
      */
     public boolean isPasswordPwned(String password) {
         // Step 1: Get the SHA-1 hash of the password using our new helper method.

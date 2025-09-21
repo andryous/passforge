@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin; // 1. ADD THIS IMPOR
 
 @RestController
 @RequestMapping("/api/passwords")
-@CrossOrigin(origins = "http://localhost:5173") // 2. ADD THIS ANNOTATION
+@CrossOrigin(origins = {"http://localhost:5173", "https://passforge-frontend.vercel.app"})
 public class PasswordController {
 
     // Field for the PasswordService instance.

@@ -14,3 +14,4 @@ public interface StrengthRule {
      */
     void apply(PasswordAnalysisResponse response, String password);
 }
+
